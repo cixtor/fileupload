@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>File Upload</title>
+</head>
+<body>
+<form method="POST" action="/upload" enctype="multipart/form-data">
+	<fieldset>
+		<legend>Upload one or more files at once.</legend>
+		<input type="file" name="files" multiple>
+		<button type="submit">Upload</button>
+	</fieldset>
+</form>
+</body>
+</html>
