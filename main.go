@@ -19,12 +19,15 @@ var directory string
 
 var maxUploadSize int64
 
+var maxMultipartSize int64
+
 //go:embed index.html
 var htmlIndex string
 
 func main() {
 	flag.StringVar(&directory, "d", ".", "Destination folder to store the uploaded files")
 	flag.Int64Var(&maxUploadSize, "m", 20<<20, "Maximum upload size for each file in bytes")
+	flag.Int64Var(&maxMultipartSize, "mp", 200<<20, "Maximum amount of file data to hold in memory")
 	flag.Parse()
 
 	srv := middleware.New()
@@ -47,7 +50,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func upload(w http.ResponseWriter, r *http.Request) {
 	// Store up to 200 MiB of data in RAM.
-	if err := r.ParseMultipartForm(200 << 20); err != nil {
+	if err := r.ParseMultipartForm(maxMultipartSize); err != nil {
 		panic(err)
 	}
 
